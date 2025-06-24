@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity Web Player | KeyBInput</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #htmlInputContainer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      z-index: 999;
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(6px);
+    }
+
+    #userInput {
+      border: none;
+      outline: none;
+      padding: 14px 20px;
+      font-size: 18px;
+      font-family: 'Poppins', sans-serif;
+      background: #f1f1f1;
+      color: #333;
+      width: 400px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    #userInput:focus {
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.4); /* cornflowerblue glow */
+    }
+
+    #screen-dimmer {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5); /* translucent white */
+      z-index: 998;
+      display: none;
+      pointer-events: none;
+    }
+
+    @media (max-width: 500px) {
+      #userInput {
+        width: 80vw;
+        font-size: 16px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" width="1280" height="720"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-warning"></div>
+    <div id="unity-footer">
+      <div id="unity-logo-title-footer"></div>
+      <div id="unity-fullscreen-button"></div>
+      <div id="unity-build-title">KeyBInput</div>
+    </div>
+  </div>
+
+  <div id="screen-dimmer"></div>
+
+  <div id="htmlInputContainer">
+    <input id="userInput" placeholder="Type here..." type="text" tabindex="0" />
+  </div>
+
+  <script>
+    window.HideHtmlInput = function (value) {
+      const inputId = window.currentInputFieldId || "default";
+      document.getElementById("htmlInputContainer").style.display = "none";
+      document.getElementById("unity-container").style.display = "block";
+      document.getElementById("unity-canvas").style.pointerEvents = "auto";
+      document.getElementById("screen-dimmer").style.display = "none";
+
+      if (window.unityInstance) {
+        console.log("[JS] Sending value to Unity:", value, "for ID:", inputId);
+        window.unityInstance.SendMessage("InputBridge", "ReturnFromHtmlInput", inputId + "|" + value);
+      } else {
+        console.warn("[JS] Unity instance not ready!");
+      }
+
+      window.currentInputFieldId = null; 
+    };
+
+    window.ShowHtmlInput = function (placeholderText = "", inputId = "default", defaultValue = "") {
+      console.log("ShowHtmlInput called for ID:", inputId, "with placeholder:", placeholderText);
+
+      document.getElementById("unity-canvas").style.pointerEvents = "none";
+      document.getElementById("unity-container").style.display = "none";
+      document.getElementById("screen-dimmer").style.display = "block";
+
+      window.currentInputFieldId = inputId;
+
+      const inputContainer = document.getElementById("htmlInputContainer");
+      const input = document.getElementById("userInput");
+
+      input.value = defaultValue || "";  //fill with existing value
+      input.placeholder = placeholderText || "Type here...";
+      inputContainer.style.display = "flex";
+
+      setTimeout(() => input.focus(), 200);
+
+      input.onblur = input.onkeydown = function (e) {
+        if (e.type === "blur" || (e.type === "keydown" && e.key === "Enter")) {
+          window.HideHtmlInput(input.value);
+        }
+      };
+    };
+
+  </script>
+
+  <script>
+    var canvas = document.querySelector("#unity-canvas");
+
+    function unityShowBanner(msg, type) {
+      var warningBanner = document.querySelector("#unity-warning");
+      function updateBannerVisibility() {
+        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+      }
+      var div = document.createElement('div');
+      div.innerHTML = msg;
+      warningBanner.appendChild(div);
+      if (type == 'error') div.style = 'background: red; padding: 10px;';
+      else {
+        if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+        setTimeout(() => {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }, 5000);
+      }
+      updateBannerVisibility();
+    }
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/test.loader.js";
+    var config = {
+      arguments: [],
+      dataUrl: buildUrl + "/test.data",
+      frameworkUrl: buildUrl + "/test.framework.js",
+      codeUrl: buildUrl + "/test.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "KeyBInput",
+      productVersion: "0.0.1",
+      showBanner: unityShowBanner,
+    };
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+      var container = document.querySelector("#unity-container");
+      container.className = "unity-mobile";
+      canvas.className = "unity-mobile";
+    } else {
+      canvas.style.width = "1280px";
+      canvas.style.height = "720px";
+    }
+
+    document.querySelector("#unity-loading-bar").style.display = "block";
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+
+        window.unityInstance = unityInstance;
+        document.querySelector("#unity-loading-bar").style.display = "none";
+        document.querySelector("#unity-fullscreen-button").onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+</html>
