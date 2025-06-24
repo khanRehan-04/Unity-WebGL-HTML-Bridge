@@ -77,3 +77,23 @@ These two scripts work together to connect Unity’s `TMP_InputField` components
 
 #### 📂 File Locations
 ![Image](https://github.com/user-attachments/assets/b19dbbf3-d47a-4516-95f0-0efa64623637)
+
+
+### 🧠 Inside `index.html` & `.jslib` — HTML Input Logic
+
+Once the WebGL template is set up, the main logic for showing and handling the native HTML `<input>` lives in two places:
+
+---
+
+### 📄 `index.html`
+
+This file handles the **UI and behavior** of the native HTML input overlay.
+
+#### 📦 What Happens:
+1. When Unity requests input, the `ShowHtmlInput(...)` JavaScript function is triggered
+2. The Unity canvas is hidden, and a styled HTML `<input>` appears
+3. The user types directly into the HTML input (fully mobile/browser native)
+4. Once finished (Enter or blur), the input is hidden and value sent back to Unity using:
+   ```javascript
+   unityInstance.SendMessage("InputBridge", "ReturnFromHtmlInput", inputId + "|" + value);
+
