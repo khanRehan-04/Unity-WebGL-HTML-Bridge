@@ -20,6 +20,33 @@ This approach results in a smoother, more intuitive typing experience for WebGL 
 
 ## ⚙️ How It Works
 
+### 🧱 Custom WebGL Template Setup
+
+Unity allows you to use a custom HTML template for WebGL builds.
+
+---
+
+#### 📋 Why a Custom Template?
+
+To gain full control over the HTML, CSS, and JavaScript behavior during runtime, I **duplicated Unity’s default template** and modified it.
+
+---
+
+#### 📁 How to Create a Custom Template
+
+1. **Navigate to the default template location** on your system:
+<Unity Editor Folder>/PlaybackEngines/WebGLSupport/BuildTools/WebGLTemplates/Default
+
+3. **Copy the entire `Default` folder** into your project under: Assets/WebGLTemplates/CustomTemplate
+
+4. Rename the folder if you’d like (e.g., `CustomTemplate`, `KeyBInputTemplate`, etc.)
+
+5. In Unity, go to:  
+**Project Settings → Player → Resolution and Presentation → WebGL Template**  
+and select your custom template from the dropdown.
+
+
+
 ### 🧠 Unity C# Scripts — InputBridge & HtmlInputFieldHandler
 
 These two scripts work together to connect Unity’s `TMP_InputField` components to the HTML input system.
