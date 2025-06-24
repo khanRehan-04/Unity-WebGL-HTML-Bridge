@@ -46,3 +46,4 @@ These two scripts work together to connect Unity’s `TMP_InputField` components
 ---
 
 #### 📂 File Locations
+![Image](https://github.com/user-attachments/assets/b19dbbf3-d47a-4516-95f0-0efa64623637)
