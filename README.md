@@ -1,4 +1,4 @@
-# 🧩 Unity WebGL Input Bridge (TMP)
+# Unity WebGL mobile input fix | HTML input in Unity WebGL
 
 When working on a Unity WebGL project, I ran into a frustrating issue:  
 Unity's built-in `TMP_InputField` components do not play well with mobile browsers — especially when the on-screen keyboard appears.
