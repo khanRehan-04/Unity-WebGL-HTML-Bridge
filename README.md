@@ -97,3 +97,5 @@ This file handles the **UI and behavior** of the native HTML input overlay.
    ```javascript
    unityInstance.SendMessage("InputBridge", "ReturnFromHtmlInput", inputId + "|" + value);
 
+![Image](https://github.com/user-attachments/assets/31e69fea-84a5-40a5-9627-c8e0431ba8f9)
+
