@@ -20,6 +20,10 @@ This approach results in a smoother, more intuitive typing experience for WebGL 
 
 ## ⚙️ How It Works
 
+#### ✅ Unity Version Used
+This setup was built and tested in:  
+**Unity 6.0.51f1 (LTS)**
+
 ### 🧱 Custom WebGL Template Setup
 
 Unity allows you to use a custom HTML template for WebGL builds.
