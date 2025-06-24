@@ -69,7 +69,7 @@ These two scripts work together to connect Unity’s `TMP_InputField` components
 ---
 
 #### 🧩 HtmlInputFieldHandler.cs
-- Attached to each TMP input field in the scene
+- Attach to each TMP input field which you want to communicate over html.
 - Handles showing the input via `InputBridge`
 - Updates the field text when HTML input is submitted
 - Registers its field with a unique `inputId`
