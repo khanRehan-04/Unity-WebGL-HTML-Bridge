@@ -42,6 +42,7 @@ These two scripts work together to connect Unity’s `TMP_InputField` components
 - Updates the field text when HTML input is submitted
 - Registers its field with a unique `inputId`
 
+![Image](https://github.com/user-attachments/assets/c80e19cc-4078-4bec-bb87-d6307632c472)
 ---
 
 #### 📂 File Locations
