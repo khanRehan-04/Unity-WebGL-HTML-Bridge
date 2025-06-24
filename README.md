@@ -104,3 +104,5 @@ This file handles the **UI and behavior** of the native HTML input overlay.
 7. Converts it from pointers to strings
 8. Then calls the browser-side ShowHtmlInput(...) function.
 
+![Image](https://github.com/user-attachments/assets/b3535af8-9a6f-4b7d-96c3-12ff87a89796)
+
