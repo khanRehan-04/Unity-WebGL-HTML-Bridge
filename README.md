@@ -31,6 +31,8 @@ These two scripts work together to connect Unity’s `TMP_InputField` components
 - Sends calls to JavaScript when a TMP field is selected
 - Receives the final typed value back from JavaScript
 - Keeps track of all active input fields by unique IDs
+  
+- ![Image](https://github.com/user-attachments/assets/d77237af-eb1d-47f2-bcfc-970a88cdc399)
 
 ---
 
