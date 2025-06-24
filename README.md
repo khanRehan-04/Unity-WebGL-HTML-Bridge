@@ -1,2 +1,45 @@
-# Unity-WebGL-HTML-Bridge
+# 🧩 Unity WebGL Input Bridge (TMP)
 
+When working on a Unity WebGL project, I ran into a frustrating issue:  
+Unity's built-in `TMP_InputField` components do not play well with mobile browsers — especially when the on-screen keyboard appears.
+
+### The Problem:
+- The TMP input field gets **obscured by the soft keyboard**, especially in **landscape mode**
+- It’s hard or impossible for users to see what they’re typing
+- Behavior is **inconsistent across devices, browsers, and OSes**
+- Unity provides **limited control** over soft keyboard interactions in WebGL builds
+
+### My Solution:
+To fix this, I created a **custom HTML input overlay** that appears when a TMP field is selected.  
+This overlay:
+- Renders a native HTML `<input>` on top of the Unity canvas
+- Automatically focuses and adjusts on mobile devices
+- Syncs the input back to Unity through `SendMessage`
+
+This approach results in a smoother, more intuitive typing experience for WebGL users — especially on touch devices(Landscape mode).
+
+## ⚙️ How It Works
+
+### 🧠 Unity C# Scripts — InputBridge & HtmlInputFieldHandler
+
+These two scripts work together to connect Unity’s `TMP_InputField` components to the HTML input system.
+
+---
+
+#### 🧩 InputBridge.cs
+- Acts as the **central controller**
+- Sends calls to JavaScript when a TMP field is selected
+- Receives the final typed value back from JavaScript
+- Keeps track of all active input fields by unique IDs
+
+---
+
+#### 🧩 HtmlInputFieldHandler.cs
+- Attached to each TMP input field in the scene
+- Handles showing the input via `InputBridge`
+- Updates the field text when HTML input is submitted
+- Registers its field with a unique `inputId`
+
+---
+
+#### 📂 File Locations
