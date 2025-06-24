@@ -39,6 +39,8 @@ To gain full control over the HTML, CSS, and JavaScript behavior during runtime,
 
 3. **Copy the entire `Default` folder** into your project under: Assets/WebGLTemplates/CustomTemplate
 
+![Image](https://github.com/user-attachments/assets/6ca36079-ca33-4da1-bf7d-cff8a353fbbb)
+
 4. Rename the folder if you’d like (e.g., `CustomTemplate`, `KeyBInputTemplate`, etc.)
 
 5. In Unity, go to:  
