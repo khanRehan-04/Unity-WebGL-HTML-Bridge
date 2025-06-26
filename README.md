@@ -111,6 +111,7 @@ This file handles the **UI and behavior** of the native HTML input overlay.
 
 ![Image](https://github.com/user-attachments/assets/31e69fea-84a5-40a5-9627-c8e0431ba8f9)
 
+make sure that the .jslib file stays in same hierarchy Assets>Plugins>WebGL> .jslib to prevent any build errors or manually link it.
 5. The .jslib file defines a function that Unity can call from C#.
 6. It receives data from C# (via [DllImport("__Internal")])
 7. Converts it from pointers to strings
