@@ -1,5 +1,11 @@
 # Unity WebGL mobile input fix | HTML input in Unity WebGL
 
+If(using VSCODE)
+{
+   // Open this README in Preview mode || press Ctrl + Shift + V in Windows to view embedded images.
+}
+
+
 When working on a Unity WebGL project, I ran into a frustrating issue:  
 Unity's built-in `TMP_InputField` components do not play well with mobile browsers — especially when the on-screen keyboard appears.
 
